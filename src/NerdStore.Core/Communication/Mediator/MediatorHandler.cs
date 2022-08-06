@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NerdStore.Core.Bus
+namespace NerdStore.Core.Communication.Mediator
 {
     public class MediatorHandler : IMediatorHandler
     {
