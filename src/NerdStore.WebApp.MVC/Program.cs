@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NerdStore.Catalogo.Application.AutoMapper;
 using NerdStore.Catalogo.Data;
+using NerdStore.Pagamentos.Data;
 using NerdStore.Vendas.Data;
 using NerdStore.WebApp.MVC.Data;
 using NerdStore.WebApp.MVC.Setup;
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<CatalogoContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDbContext<VendasContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<PagamentoContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
