@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using NerdStore.Core.Data.EventSouring;
+using NerdStore.Core.Data.EventSourcing;
 using NerdStore.Core.Messages;
 using NerdStore.Core.Messages.CommonMessages.DomainEvents;
 using NerdStore.Core.Messages.CommonMessages.Notifications;

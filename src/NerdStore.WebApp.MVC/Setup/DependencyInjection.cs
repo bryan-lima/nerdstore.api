@@ -6,7 +6,7 @@ using NerdStore.Catalogo.Data.Repository;
 using NerdStore.Catalogo.Domain;
 using NerdStore.Catalogo.Domain.Events;
 using NerdStore.Core.Communication.Mediator;
-using NerdStore.Core.Data.EventSouring;
+using NerdStore.Core.Data.EventSourcing;
 using NerdStore.Core.Messages.CommonMessages.IntegrationEvents;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
 using NerdStore.Pagamentos.AntiCorruption;

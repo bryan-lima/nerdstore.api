@@ -1,5 +1,5 @@
 ﻿using EventStore.ClientAPI;
-using NerdStore.Core.Data.EventSouring;
+using NerdStore.Core.Data.EventSourcing;
 using NerdStore.Core.Messages;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NerdStore.Core.Data.EventSouring
+namespace NerdStore.Core.Data.EventSourcing
 {
     public interface IEventSourcingRepository
     {
