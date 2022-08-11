@@ -1,11 +1,11 @@
 ﻿using EventStore.ClientAPI;
 using NerdStore.Core.Data.EventSouring;
 using NerdStore.Core.Messages;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace EventSourcing
@@ -36,7 +36,7 @@ namespace EventSourcing
             foreach (var resolvedEvent in eventos.Events)
             {
                 var dataEncoded = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
-                var jsonData = JsonConvert.DeserializeObject<BaseEvent>(dataEncoded);
+                var jsonData = JsonSerializer.Deserialize<BaseEvent>(dataEncoded);
 
                 var evento = new StoredEvent(
                     resolvedEvent.Event.EventId,
@@ -56,7 +56,7 @@ namespace EventSourcing
                 Guid.NewGuid(),
                 evento.MessageType,
                 true,
-                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evento)),
+                Encoding.UTF8.GetBytes(JsonSerializer.Serialize(evento)),
                 null);
         }
     }
