@@ -64,10 +64,9 @@ namespace NerdStore.WebApp.MVC.Setup
 
             services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoEstoqueRejeitadoEvent>, PedidoEventHandler>();
-            services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
-            services.AddScoped<INotificationHandler<PagamentoRealizadoEvent>, PedidoEventHandler>();
-            services.AddScoped<INotificationHandler<PagamentoRecusadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoPagamentoRealizadoEvent>, PedidoEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoPagamentoRecusadoEvent>, PedidoEventHandler>();
 
             // Pagamento
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
