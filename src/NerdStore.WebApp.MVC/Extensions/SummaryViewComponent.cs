@@ -15,9 +15,10 @@ namespace NerdStore.WebApp.MVC.Extensions
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var notificacoes = await Task.FromResult(_notifications.ObterNotificacoes());
-            notificacoes.ForEach(c => ViewData.ModelState.AddModelError(string.Empty, c.Value));
-            
+            List<DomainNotification> _notificacoes = await Task.FromResult(_notifications.ObterNotificacoes());
+            _notificacoes.ForEach(domaiNotification => ViewData.ModelState.AddModelError(key: string.Empty,
+                                                                                         errorMessage: domaiNotification.Value));
+
             return View();
         }
     }
