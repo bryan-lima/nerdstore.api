@@ -28,30 +28,44 @@ namespace NerdStore.WebApp.MVC.Setup
     {
         public static void RegisterServices(this IServiceCollection services)
         {
-            // Mediator
+            #region Mediator
+
             services.AddScoped<IMediatorHandler, MediatorHandler>();
 
-            // Notifications
+            #endregion Mediator
+
+            #region Notifications
+
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
-            // Event Sourcing
+            #endregion Notifications
+
+            #region Event Sourcing
+
             services.AddSingleton<IEventStoreService, EventStoreService>();
             services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
-            // Catalogo
+            #endregion Event Sourcing
+
+            #region Catalogo
+
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped<IEstoqueService, EstoqueService>();
             services.AddScoped<CatalogoContext>();
 
+            #endregion Catalogo
+
             services.AddScoped<INotificationHandler<ProdutoAbaixoEstoqueEvent>, ProdutoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoIniciadoEvent>, ProdutoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoProcessamentoCanceladoEvent>, ProdutoEventHandler>();
 
-            // Vendas
+            #region Vendas
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPedidoQueries, PedidoQueries>();
             services.AddScoped<VendasContext>();
+
+            #endregion Vendas
 
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
@@ -68,13 +82,16 @@ namespace NerdStore.WebApp.MVC.Setup
             services.AddScoped<INotificationHandler<PedidoPagamentoRealizadoEvent>, PedidoEventHandler>();
             services.AddScoped<INotificationHandler<PedidoPagamentoRecusadoEvent>, PedidoEventHandler>();
 
-            // Pagamento
+            #region Pagamento
+
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
             services.AddScoped<IPagamentoService, PagamentoService>();
             services.AddScoped<IPagamentoCartaoCreditoFacade, PagamentoCartaoCreditoFacade>();
             services.AddScoped<IPayPalGateway, PayPalGateway>();
             services.AddScoped<IConfigurationManager, ConfigurationManager>();
             services.AddScoped<PagamentoContext>();
+
+            #endregion Pagamento
 
             services.AddScoped<INotificationHandler<PedidoEstoqueConfirmadoEvent>, PagamentoEventHandler>();
         }
