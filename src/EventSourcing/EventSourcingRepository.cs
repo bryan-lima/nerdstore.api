@@ -1,12 +1,8 @@
 ﻿using EventStore.ClientAPI;
 using NerdStore.Core.Data.EventSourcing;
 using NerdStore.Core.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace EventSourcing
 {
@@ -21,43 +17,45 @@ namespace EventSourcing
 
         public async Task SalvarEvento<TEvent>(TEvent evento) where TEvent : Event
         {
-            await _eventStoreService.GetConnection().AppendToStreamAsync(
-                evento.AggregateId.ToString(),
-                ExpectedVersion.Any,
-                FormatarEvento(evento));
+            await _eventStoreService.GetConnection()
+                                    .AppendToStreamAsync(stream: evento.AggregateId.ToString(),
+                                                         expectedVersion: ExpectedVersion.Any,
+                                                         events: FormatarEvento(evento));
         }
 
         public async Task<IEnumerable<StoredEvent>> ObterEventos(Guid aggregateId)
         {
-            var eventos = await _eventStoreService.GetConnection().ReadStreamEventsForwardAsync(aggregateId.ToString(), 0, 500, false);
+            StreamEventsSlice _eventos = await _eventStoreService.GetConnection()
+                                                                 .ReadStreamEventsForwardAsync(stream: aggregateId.ToString(),
+                                                                                               start: 0,
+                                                                                               count: 500,
+                                                                                               resolveLinkTos: false);
 
-            var listaEventos = new List<StoredEvent>();
+            List<StoredEvent> _listaEventos = new();
 
-            foreach (var resolvedEvent in eventos.Events)
+            foreach (ResolvedEvent resolvedEvent in _eventos.Events)
             {
-                var dataEncoded = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
-                var jsonData = JsonSerializer.Deserialize<BaseEvent>(dataEncoded);
+                string _dataEncoded = Encoding.UTF8.GetString(resolvedEvent.Event.Data);
+                BaseEvent _jsonData = JsonSerializer.Deserialize<BaseEvent>(_dataEncoded);
 
-                var evento = new StoredEvent(
-                    resolvedEvent.Event.EventId,
-                    resolvedEvent.Event.EventType,
-                    jsonData.Timestamp,
-                    dataEncoded);
+                StoredEvent _evento = new(id: resolvedEvent.Event.EventId,
+                                          tipo: resolvedEvent.Event.EventType,
+                                          dataOcorrencia: _jsonData.Timestamp,
+                                          dados: _dataEncoded);
 
-                listaEventos.Add(evento);
+                _listaEventos.Add(_evento);
             }
 
-            return listaEventos.OrderBy(e => e.DataOcorrencia);
+            return _listaEventos.OrderBy(storedEvent => storedEvent.DataOcorrencia);
         }
 
         private static IEnumerable<EventData> FormatarEvento<TEvent>(TEvent evento) where TEvent : Event
         {
-            yield return new EventData(
-                Guid.NewGuid(),
-                evento.MessageType,
-                true,
-                Encoding.UTF8.GetBytes(JsonSerializer.Serialize(evento)),
-                null);
+            yield return new EventData(eventId: Guid.NewGuid(),
+                                       type: evento.MessageType,
+                                       isJson: true,
+                                       data: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(evento)),
+                                       metadata: null);
         }
     }
 
