@@ -8,12 +8,22 @@ namespace EventSourcing
 {
     public class EventSourcingRepository : IEventSourcingRepository
     {
+        #region Private Fields
+
         private readonly IEventStoreService _eventStoreService;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public EventSourcingRepository(IEventStoreService eventStoreService)
         {
             _eventStoreService = eventStoreService;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public async Task SalvarEvento<TEvent>(TEvent evento) where TEvent : Event
         {
@@ -49,6 +59,10 @@ namespace EventSourcing
             return _listaEventos.OrderBy(storedEvent => storedEvent.DataOcorrencia);
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static IEnumerable<EventData> FormatarEvento<TEvent>(TEvent evento) where TEvent : Event
         {
             yield return new EventData(eventId: Guid.NewGuid(),
@@ -57,10 +71,16 @@ namespace EventSourcing
                                        data: Encoding.UTF8.GetBytes(JsonSerializer.Serialize(evento)),
                                        metadata: null);
         }
+
+        #endregion Private Methods
     }
 
     internal class BaseEvent
     {
+        #region Public Properties
+
         public DateTime Timestamp { get; set; }
+
+        #endregion Public Properties
     }
 }
