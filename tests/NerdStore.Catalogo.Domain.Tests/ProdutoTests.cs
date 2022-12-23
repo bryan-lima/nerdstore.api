@@ -7,7 +7,7 @@ namespace NerdStore.Catalogo.Domain.Tests
         [Fact]
         public void Produto_Validar_ValidacoesDevemRetornarExceptions()
         {
-            // Arrange & Act & Assert
+            #region Arrange & Act & Assert
 
             DomainException _domainException = Assert.Throws<DomainException>(() => new Produto(nome: string.Empty,
                                                                                                 descricao: "Descricao",
@@ -37,13 +37,13 @@ namespace NerdStore.Catalogo.Domain.Tests
             Assert.Equal(expected: "O campo Descricao do produto não pode estar vazio",
                          actual: _domainException.Message);
 
-            _domainException = Assert.Throws<DomainException>(() => new Produto("Nome",
-                                                                                "Descricao",
-                                                                                false,
-                                                                                0,
-                                                                                Guid.NewGuid(),
-                                                                                DateTime.Now,
-                                                                                "Imagem",
+            _domainException = Assert.Throws<DomainException>(() => new Produto(nome: "Nome",
+                                                                                descricao: "Descricao",
+                                                                                ativo: false,
+                                                                                valor: 0,
+                                                                                categoriaId: Guid.NewGuid(),
+                                                                                dataCadastro: DateTime.Now,
+                                                                                imagem: "Imagem",
                                                                                 dimensoes: new Dimensoes(altura: 1,
                                                                                                          largura: 1,
                                                                                                          profundidade: 1)));
@@ -92,6 +92,8 @@ namespace NerdStore.Catalogo.Domain.Tests
 
             Assert.Equal(expected: "O campo Altura não pode ser menor ou igual a 0",
                          actual: _domainException.Message);
+
+            #endregion Arrange & Act & Assert
         }
     }
 }
