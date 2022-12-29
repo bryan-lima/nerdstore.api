@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using NerdStore.Catalogo.Application.ViewModels;
 using NerdStore.Catalogo.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NerdStore.Catalogo.Application.AutoMapper
 {
@@ -14,9 +9,12 @@ namespace NerdStore.Catalogo.Application.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<Produto, ProdutoViewModel>()
-                .ForMember(d => d.Largura, o => o.MapFrom(s => s.Dimensoes.Largura))
-                .ForMember(d => d.Altura, o => o.MapFrom(s => s.Dimensoes.Altura))
-                .ForMember(d => d.Profundidade, o => o.MapFrom(s => s.Dimensoes.Profundidade));
+                .ForMember(produtoViewModel => produtoViewModel.Largura,
+                           config => config.MapFrom(produto => produto.Dimensoes.Largura))
+                .ForMember(produtoViewModel => produtoViewModel.Altura,
+                           config => config.MapFrom(produto => produto.Dimensoes.Altura))
+                .ForMember(produtoViewModel => produtoViewModel.Profundidade,
+                           config => config.MapFrom(produto => produto.Dimensoes.Profundidade));
 
             CreateMap<Categoria, CategoriaViewModel>();
         }
