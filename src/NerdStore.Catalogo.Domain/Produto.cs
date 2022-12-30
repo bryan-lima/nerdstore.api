@@ -90,8 +90,8 @@ namespace NerdStore.Catalogo.Domain
             Validacoes.ValidarSeVazio(valor: Descricao,
                                       mensagem: "O campo Descricao do produto não pode estar vazio");
 
-            Validacoes.ValidarSeIgual(object1: CategoriaId,
-                                      object2: Guid.Empty,
+            Validacoes.ValidarSeIgual(objeto1: CategoriaId,
+                                      objeto2: Guid.Empty,
                                       mensagem: "O campo CategoriaId do produto não pode estar vazio");
 
             Validacoes.ValidarSeMenorQue(valor: Valor,
