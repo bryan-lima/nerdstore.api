@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NerdStore.Core.Extensions
+﻿namespace NerdStore.Core.Extensions
 {
     public static class EnumerableExtensions
     {
+        #region Public Methods
+
         public static void ForEach<T>(this IEnumerable<T> items, Action<T> itemAction)
         {
-            foreach (var item in items)
-            {
+            foreach (T item in items)
                 itemAction(item);
-            }
         }
+
+        #endregion Public Methods
     }
 }

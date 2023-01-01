@@ -15,8 +15,7 @@ namespace NerdStore.WebApp.MVC.Controllers
         [HttpGet("eventos/{id:guid}")]
         public async Task<IActionResult> Index(Guid id)
         {
-            var eventos = await _eventSourcingRepository.ObterEventos(id);
-            return View(eventos);
+            return View(await _eventSourcingRepository.ObterEventos(id));
         }
     }
 }

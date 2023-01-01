@@ -10,9 +10,9 @@ namespace NerdStore.WebApp.MVC.Controllers
     {
         private readonly IPedidoQueries _pedidoQueries;
 
-        public PedidoController(IPedidoQueries pedidoQueries,
-            INotificationHandler<DomainNotification> notifications,
-            IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
+        public PedidoController(IMediatorHandler mediatorHandler,
+                                INotificationHandler<DomainNotification> notifications,
+                                IPedidoQueries pedidoQueries) : base(notifications, mediatorHandler)
         {
             _pedidoQueries = pedidoQueries;
         }

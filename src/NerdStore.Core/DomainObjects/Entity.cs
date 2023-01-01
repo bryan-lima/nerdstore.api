@@ -1,23 +1,32 @@
 ﻿using NerdStore.Core.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NerdStore.Core.DomainObjects
 {
     public abstract class Entity
     {
-        public Guid Id { get; set; }
-        
+        #region Private Fields
+
         private List<Event> _notificacoes;
-        public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
+
+        #endregion Private Fields
+
+        #region Protected Constructors
 
         protected Entity()
         {
             Id = Guid.NewGuid();
         }
+
+        #endregion Protected Constructors
+
+        #region Public Properties
+
+        public Guid Id { get; set; }
+        public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public void AdicionarEvento(Event evento)
         {
@@ -35,14 +44,14 @@ namespace NerdStore.Core.DomainObjects
             _notificacoes?.Clear();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object objeto)
         {
-            var compareTo = obj as Entity;
+            Entity _compareTo = objeto as Entity;
 
-            if (ReferenceEquals(this, compareTo)) return true;
-            if (ReferenceEquals(null, compareTo)) return false;
+            if (ReferenceEquals(this, _compareTo)) return true;
+            if (ReferenceEquals(null, _compareTo)) return false;
 
-            return Id.Equals(compareTo.Id);
+            return Id.Equals(_compareTo.Id);
         }
 
         public static bool operator ==(Entity a, Entity b)
@@ -75,5 +84,7 @@ namespace NerdStore.Core.DomainObjects
         {
             throw new NotImplementedException();
         }
+
+        #endregion Public Methods
     }
 }

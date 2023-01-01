@@ -7,43 +7,93 @@ namespace NerdStore.Catalogo.Domain.Tests
         [Fact]
         public void Produto_Validar_ValidacoesDevemRetornarExceptions()
         {
-            // Arrange & Act & Assert
+            #region Arrange & Act & Assert
 
-            var ex = Assert.Throws<DomainException>(() =>
-                new Produto(string.Empty, "Descricao", false, 100, Guid.NewGuid(), DateTime.Now, "Imagem", new Dimensoes(1, 1, 1))
-            );
+            DomainException _domainException = Assert.Throws<DomainException>(() => new Produto(nome: string.Empty,
+                                                                                                descricao: "Descricao",
+                                                                                                ativo: false,
+                                                                                                valor: 100,
+                                                                                                categoriaId: Guid.NewGuid(),
+                                                                                                dataCadastro: DateTime.Now,
+                                                                                                imagem: "Imagem",
+                                                                                                dimensoes: new Dimensoes(altura: 1,
+                                                                                                                         largura: 1,
+                                                                                                                         profundidade: 1)));
 
-            Assert.Equal("O campo Nome do produto não pode estar vazio", ex.Message);
+            Assert.Equal(expected: "O campo Nome do produto não pode estar vazio",
+                         actual: _domainException.Message);
 
-            ex = Assert.Throws<DomainException>(() =>
-                new Produto("Nome", string.Empty, false, 100, Guid.NewGuid(), DateTime.Now, "Imagem", new Dimensoes(1, 1, 1))
-            );
+            _domainException = Assert.Throws<DomainException>(() => new Produto(nome: "Nome",
+                                                                                descricao: string.Empty,
+                                                                                ativo: false,
+                                                                                valor: 100,
+                                                                                categoriaId: Guid.NewGuid(),
+                                                                                dataCadastro: DateTime.Now,
+                                                                                imagem: "Imagem",
+                                                                                dimensoes: new Dimensoes(altura: 1,
+                                                                                                         largura: 1,
+                                                                                                         profundidade: 1)));
 
-            Assert.Equal("O campo Descricao do produto não pode estar vazio", ex.Message);
+            Assert.Equal(expected: "O campo Descricao do produto não pode estar vazio",
+                         actual: _domainException.Message);
 
-            ex = Assert.Throws<DomainException>(() =>
-                new Produto("Nome", "Descricao", false, 0, Guid.NewGuid(), DateTime.Now, "Imagem", new Dimensoes(1, 1, 1))
-            );
+            _domainException = Assert.Throws<DomainException>(() => new Produto(nome: "Nome",
+                                                                                descricao: "Descricao",
+                                                                                ativo: false,
+                                                                                valor: 0,
+                                                                                categoriaId: Guid.NewGuid(),
+                                                                                dataCadastro: DateTime.Now,
+                                                                                imagem: "Imagem",
+                                                                                dimensoes: new Dimensoes(altura: 1,
+                                                                                                         largura: 1,
+                                                                                                         profundidade: 1)));
 
-            Assert.Equal("O campo Valor do produto não pode se menor igual a 0", ex.Message);
+            Assert.Equal(expected: "O campo Valor do produto não pode se menor igual a 0",
+                         actual: _domainException.Message);
 
-            ex = Assert.Throws<DomainException>(() =>
-                new Produto("Nome", "Descricao", false, 100, Guid.Empty, DateTime.Now, "Imagem", new Dimensoes(1, 1, 1))
-            );
+            _domainException = Assert.Throws<DomainException>(() => new Produto(nome: "Nome",
+                                                                                descricao: "Descricao",
+                                                                                ativo: false,
+                                                                                valor: 100,
+                                                                                categoriaId: Guid.Empty,
+                                                                                dataCadastro: DateTime.Now,
+                                                                                imagem: "Imagem",
+                                                                                dimensoes: new Dimensoes(altura: 1,
+                                                                                                         largura: 1,
+                                                                                                         profundidade: 1)));
 
-            Assert.Equal("O campo CategoriaId do produto não pode estar vazio", ex.Message);
+            Assert.Equal(expected: "O campo CategoriaId do produto não pode estar vazio",
+                         actual: _domainException.Message);
 
-            ex = Assert.Throws<DomainException>(() =>
-                new Produto("Nome", "Descricao", false, 100, Guid.NewGuid(), DateTime.Now, string.Empty, new Dimensoes(1, 1, 1))
-            );
+            _domainException = Assert.Throws<DomainException>(() => new Produto(nome: "Nome",
+                                                                                descricao: "Descricao",
+                                                                                ativo: false,
+                                                                                valor: 100,
+                                                                                categoriaId: Guid.NewGuid(),
+                                                                                dataCadastro: DateTime.Now,
+                                                                                imagem: string.Empty,
+                                                                                dimensoes: new Dimensoes(altura: 1,
+                                                                                                         largura: 1,
+                                                                                                         profundidade: 1)));
 
-            Assert.Equal("O campo Imagem do produto não pode estar vazio", ex.Message);
+            Assert.Equal(expected: "O campo Imagem do produto não pode estar vazio",
+                         actual: _domainException.Message);
 
-            ex = Assert.Throws<DomainException>(() =>
-                new Produto("Nome", "Descricao", false, 100, Guid.NewGuid(), DateTime.Now, "Imagem", new Dimensoes(0, 1, 1))
-            );
+            _domainException = Assert.Throws<DomainException>(() => new Produto(nome: "Nome",
+                                                                                descricao: "Descricao",
+                                                                                ativo: false,
+                                                                                valor: 100,
+                                                                                categoriaId: Guid.NewGuid(),
+                                                                                dataCadastro: DateTime.Now,
+                                                                                imagem: "Imagem",
+                                                                                dimensoes: new Dimensoes(altura: 1,
+                                                                                                         largura: 1,
+                                                                                                         profundidade: 1)));
 
-            Assert.Equal("O campo Altura não pode ser menor ou igual a 0", ex.Message);
+            Assert.Equal(expected: "O campo Altura não pode ser menor ou igual a 0",
+                         actual: _domainException.Message);
+
+            #endregion Arrange & Act & Assert
         }
     }
 }
