@@ -3,25 +3,30 @@ using NerdStore.Core.Data.EventSourcing;
 using NerdStore.Core.Messages;
 using NerdStore.Core.Messages.CommonMessages.DomainEvents;
 using NerdStore.Core.Messages.CommonMessages.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NerdStore.Core.Communication.Mediator
 {
     public class MediatorHandler : IMediatorHandler
     {
-        private readonly IMediator _mediator;
-        private readonly IEventSourcingRepository _eventSourcingRepository;
+        #region Private Fields
 
-        public MediatorHandler(IMediator mediator, 
-                               IEventSourcingRepository eventSourcingRepository)
+        private readonly IEventSourcingRepository _eventSourcingRepository;
+        private readonly IMediator _mediator;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        public MediatorHandler(IEventSourcingRepository eventSourcingRepository,
+                               IMediator mediator)
         {
-            _mediator = mediator;
             _eventSourcingRepository = eventSourcingRepository;
+            _mediator = mediator;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public async Task<bool> EnviarComando<T>(T comando) where T : Command
         {
@@ -43,5 +48,7 @@ namespace NerdStore.Core.Communication.Mediator
         {
             await _mediator.Publish(notificacao);
         }
+
+        #endregion Public Methods
     }
 }

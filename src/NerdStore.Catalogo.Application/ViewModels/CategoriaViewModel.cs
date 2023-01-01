@@ -4,6 +4,8 @@ namespace NerdStore.Catalogo.Application.ViewModels
 {
     public class CategoriaViewModel
     {
+        #region Public Properties
+
         [Key]
         public Guid Id { get; set; }
 
@@ -12,5 +14,7 @@ namespace NerdStore.Catalogo.Application.ViewModels
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int Codigo { get; set; }
+
+        #endregion Public Properties
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NerdStore.Vendas.Application.Queries;
+using NerdStore.Vendas.Application.Queries.ViewModels;
 
 namespace NerdStore.WebApp.MVC.Extensions
 {
@@ -17,10 +18,10 @@ namespace NerdStore.WebApp.MVC.Extensions
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var carrinho = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
-            var itens = carrinho?.Items.Count ?? 0;
+            CarrinhoViewModel _carrinho = await _pedidoQueries.ObterCarrinhoCliente(ClienteId);
+            int _itens = _carrinho?.Items.Count ?? 0;
 
-            return View(itens);
+            return View(_itens);
         }
     }
 }
